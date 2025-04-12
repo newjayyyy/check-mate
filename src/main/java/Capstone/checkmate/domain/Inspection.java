@@ -74,6 +74,9 @@ public class Inspection {
 
     //==비즈니스 로직==//
 
+    /**
+     * 총합, anomaly 개수/비율 계산
+     */
     public void calculateAnomalyStats() {
         int cnt = (int) inspectionImages.stream()
                 .filter(img -> img.getResult() == InspectResult.ABNORMAL)

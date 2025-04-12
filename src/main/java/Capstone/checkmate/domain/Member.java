@@ -3,7 +3,6 @@ package Capstone.checkmate.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,13 +19,13 @@ public class Member {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String username; // ID
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String name; // 유저 닉네임
 
     @Email
     @Column(nullable = false, unique = true)

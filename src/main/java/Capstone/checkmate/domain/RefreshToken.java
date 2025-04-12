@@ -14,10 +14,12 @@ import java.time.LocalDateTime;
 public class RefreshToken {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "token_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
     @Column(nullable = false, unique = true)
     private String token;
@@ -25,9 +27,14 @@ public class RefreshToken {
     @Column(nullable = false)
     private LocalDateTime expiryDate;
 
-    public RefreshToken(String token, String memberId, LocalDateTime expiryDate) {
+    public RefreshToken(Member member, String token, LocalDateTime expiryDate) {
+        this.member = member;
         this.token = token;
-        this.memberId = memberId;
         this.expiryDate = expiryDate;
+    }
+
+    public void updateToken(String newToken, LocalDateTime newExpiryDate) {
+        this.token = newToken;
+        this.expiryDate = newExpiryDate;
     }
 }

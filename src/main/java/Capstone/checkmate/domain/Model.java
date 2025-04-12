@@ -22,5 +22,4 @@ public class Model {
 
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<Inspection> inspections = new ArrayList<>();
-
 }
