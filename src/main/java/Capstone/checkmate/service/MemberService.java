@@ -22,11 +22,8 @@ public class MemberService {
     @Transactional
     public Long save(CreateUserRequest dto) {
         validateDuplicateMember(dto);
-        return memberRepository.save(Member.builder()
-                .username(dto.getUsername())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .email(dto.getEmail())
-                .build()).getId();
+        Member member = Member.createMember(dto.getUsername(), dto.getPassword(), dto.getName(), dto.getEmail());
+        return memberRepository.save(member).getId();
     }
 
     private void validateDuplicateMember(CreateUserRequest dto) {
