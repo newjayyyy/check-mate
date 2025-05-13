@@ -28,9 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	implementation 'org.springframework.session:spring-session-jdbc'
 
 	// 쿼리 파라미터 로그 남기기 (개발 후 제거)
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")

@@ -18,7 +18,18 @@ spring:
     init:
       mode: always
 
+  session:
+    store-type: jdbc
+    jdbc.initialize-schema: always
+
+  security:
+    rememberme:
+      key: ${REMEMBER_ME_KEY}
+
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
+    org.springframework.security: debug
+    org.springframework.security.authentication: debug
+    org.springframework.security.web.authentication: debug
