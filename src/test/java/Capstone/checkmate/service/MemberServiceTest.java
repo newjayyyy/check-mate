@@ -1,6 +1,7 @@
 package Capstone.checkmate.service;
 
 import Capstone.checkmate.dto.CreateUserRequest;
+import Capstone.checkmate.exception.DuplicateMemberException;
 import Capstone.checkmate.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest()
 @Transactional
 class MemberServiceTest {
 
@@ -55,7 +56,7 @@ class MemberServiceTest {
         memberService.save(member1);
 
         //then
-        assertThrows(IllegalStateException.class, () -> memberService.save(member2));
+        assertThrows(DuplicateMemberException.class, () -> memberService.save(member2));
     }
 
     @Test
@@ -78,7 +79,29 @@ class MemberServiceTest {
         memberService.save(member1);
 
         //then
-        assertThrows(IllegalStateException.class, () -> memberService.save(member2));
+        assertThrows(DuplicateMemberException.class, () -> memberService.save(member2));
     }
 
+    @Test
+    public void 중복Name테스트() throws Exception {
+        //given
+        CreateUserRequest member1 = CreateUserRequest.builder()
+                .username("ID1")
+                .password("pass1")
+                .name("name1")
+                .email("a@gmail.com")
+                .build();
+        CreateUserRequest member2 = CreateUserRequest.builder()
+                .username("ID2")
+                .password("pass2")
+                .name("name1")
+                .email("b@gmail.com")
+                .build();
+
+        //when
+        memberService.save(member1);
+
+        //then
+        assertThrows(DuplicateMemberException.class, () -> memberService.save(member2));
+    }
 }

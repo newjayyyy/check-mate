@@ -25,11 +25,8 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> member = memberRepository.findByUsername(username);
         if(member.isEmpty()) {
-            System.out.println("No member found with username " + username);
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
         }
-
-        System.out.println("Member found with username " + username);
 
         Member result = member.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
