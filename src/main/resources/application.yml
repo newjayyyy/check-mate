@@ -21,6 +21,7 @@ spring:
   session:
     store-type: jdbc
     jdbc.initialize-schema: always
+    timeout: 1h
 
   security:
     rememberme:
