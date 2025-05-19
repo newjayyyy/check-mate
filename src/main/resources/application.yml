@@ -27,6 +27,17 @@ spring:
     rememberme:
       key: ${REMEMBER_ME_KEY}
 
+cloud:
+  aws:
+    s3:
+      bucket: deepcheck-image-storage
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+
+
 logging:
   level:
     org.hibernate.SQL: debug
