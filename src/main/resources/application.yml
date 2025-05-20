@@ -37,6 +37,8 @@ cloud:
       access-key: ${AWS_ACCESS_KEY_ID}
       secret-key: ${AWS_SECRET_ACCESS_KEY}
 
+# FastApi 모델 서버 기본 URL
+model.server.url: http://localhost:8000
 
 logging:
   level:

@@ -26,7 +26,9 @@ public class S3Service {
     private String bucket;
 
 
-    /** 업로드: S3에 파일 올리고, 저장된 객체 키(objectKey)를 반환 */
+    /**
+     * 업로드: S3에 파일 올리고, 저장된 객체 키(objectKey)를 반환
+     */
     public String uploadFile(MultipartFile file) {
         // 1) 키 생성 (UUID_원본이름.ext)
         String original = StringUtils.cleanPath(file.getOriginalFilename());
@@ -48,6 +50,9 @@ public class S3Service {
         return objectKey;
     }
 
+    /**
+     * Presigned GET URL 생성 (expirationMinutes 만큼 유효)
+     */
     public URL generatePresignedUrl(String objectKey, long expirationMinutes) {
         Date expires = new Date(System.currentTimeMillis() +
                 TimeUnit.MINUTES.toMillis(expirationMinutes));
