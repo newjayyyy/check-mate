@@ -111,8 +111,9 @@ public class InspectionService {
      */
     public List<InspectionViewResponse> viewAllInspections() {
         List<InspectionViewResponse> result = new ArrayList<>();
-        List<Inspection> inspections = inspectionRepository.findAll();
+        List<Inspection> inspections = inspectionRepository.findAll(); // entity 조회
 
+        // dto 생성 및 추가
         for (Inspection inspection : inspections) {
             InspectionViewResponse dto = new InspectionViewResponse();
             dto.setInspectId(inspection.getId());
@@ -140,8 +141,9 @@ public class InspectionService {
      */
     public List<InspectionViewResponse> viewInspectionsByDate(LocalDateTime from, LocalDateTime to) {
         List<InspectionViewResponse> result = new ArrayList<>();
-        List<Inspection> inspections = inspectionRepository.findAllByUploadedAtBetween(from, to);
+        List<Inspection> inspections = inspectionRepository.findAllByUploadedAtBetween(from, to); // entity 조회
 
+        // dto 생성 및 추가
         for (Inspection inspection : inspections) {
             InspectionViewResponse dto = new InspectionViewResponse();
             dto.setInspectId(inspection.getId());
@@ -174,7 +176,7 @@ public class InspectionService {
 
         List<InspectionImage> images = inspectionImageRepository.findAllByInspection(inspection);
         for (InspectionImage image : images) {
-            s3Service.deleteFile(image.getImageUrl());
+            s3Service.deleteFile(image.getImageUrl()); // bucket에 저장된 image 삭제
         }
 
         inspectionRepository.delete(inspection);
