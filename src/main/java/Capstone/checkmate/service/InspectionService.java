@@ -1,14 +1,13 @@
 package Capstone.checkmate.service;
 
 import Capstone.checkmate.domain.*;
-import Capstone.checkmate.dto.InspectionResponse;
-import Capstone.checkmate.dto.InspectionResultResponse;
-import Capstone.checkmate.dto.PredictResponse;
+import Capstone.checkmate.dto.*;
 import Capstone.checkmate.repository.InspectionImageRepository;
 import Capstone.checkmate.repository.InspectionRepository;
 import Capstone.checkmate.repository.MemberRepository;
 import Capstone.checkmate.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.bv.notempty.NotEmptyValidatorForArraysOfChar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -106,6 +106,64 @@ public class InspectionService {
         return responseDto;
     }
 
+    /**
+     * 전체 Inspection 조회
+     */
+    public List<InspectionViewResponse> viewAllInspections() {
+        List<InspectionViewResponse> result = new ArrayList<>();
+        List<Inspection> inspections = inspectionRepository.findAll();
+
+        for (Inspection inspection : inspections) {
+            InspectionViewResponse dto = new InspectionViewResponse();
+            dto.setInspectId(inspection.getId());
+            dto.setUploadedDate(inspection.getUploadedAt());
+
+            List<InspectionImage> images = inspectionImageRepository.findAllByInspection(inspection);
+            for (InspectionImage image : images) {
+                ImageResult imageResult = new ImageResult();
+
+                URL url = s3Service.generatePresignedUrl(image.getImageUrl(), 10); // 10분간 유효한 이미지 조회 링크 생성
+                imageResult.setImageUrl(url);
+                imageResult.setInspectResult(image.getResult());
+
+                dto.getImages().add(imageResult);
+            }
+
+            result.add(dto);
+        }
+
+        return result;
+    }
+
+    /**
+     * 날짜 기반 Inspection 조회
+     */
+    public List<InspectionViewResponse> viewInspectionsByDate(LocalDateTime from, LocalDateTime to) {
+        List<InspectionViewResponse> result = new ArrayList<>();
+        List<Inspection> inspections = inspectionRepository.findAllByUploadedAtBetween(from, to);
+
+        for (Inspection inspection : inspections) {
+            InspectionViewResponse dto = new InspectionViewResponse();
+            dto.setInspectId(inspection.getId());
+            dto.setUploadedDate(inspection.getUploadedAt());
+
+            List<InspectionImage> images = inspectionImageRepository.findAllByInspection(inspection);
+            for (InspectionImage image : images) {
+                ImageResult imageResult = new ImageResult();
+
+                URL url = s3Service.generatePresignedUrl(image.getImageUrl(), 10); // 10분간 유효한 이미지 조회 링크 생성
+                imageResult.setImageUrl(url);
+                imageResult.setInspectResult(image.getResult());
+
+                dto.getImages().add(imageResult);
+            }
+
+            result.add(dto);
+        }
+
+        return result;
+    }
+
 
     /**
      * Inspection 삭제
@@ -113,6 +171,12 @@ public class InspectionService {
     @Transactional
     public void deleteInspection(Long inspectionId) {
         Inspection inspection = inspectionRepository.findById(inspectionId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 검사입니다."));
+
+        List<InspectionImage> images = inspectionImageRepository.findAllByInspection(inspection);
+        for (InspectionImage image : images) {
+            s3Service.deleteFile(image.getImageUrl());
+        }
+
         inspectionRepository.delete(inspection);
     }
 
