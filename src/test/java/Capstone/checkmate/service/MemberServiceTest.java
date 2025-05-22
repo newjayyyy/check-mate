@@ -1,17 +1,23 @@
 package Capstone.checkmate.service;
 
+import Capstone.checkmate.SecurityConfig;
 import Capstone.checkmate.dto.CreateUserRequest;
 import Capstone.checkmate.exception.DuplicateMemberException;
 import Capstone.checkmate.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest()
+@SpringBootTest
 @Transactional
 class MemberServiceTest {
 

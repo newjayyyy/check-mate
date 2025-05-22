@@ -7,6 +7,7 @@ import java.net.URL;
 
 @Data
 public class ImageResult {
+    private String fileName;
     private URL imageUrl;
     private InspectResult inspectResult;
 }

@@ -82,7 +82,7 @@ public class InspectionService {
             InspectResult result = pr.isAbnormal() ? InspectResult.ABNORMAL : InspectResult.NORMAL;
 
             // DB 저장용 엔티티
-            InspectionImage entity = InspectionImage.createInspectionImage(keys.get(i), result);
+            InspectionImage entity = InspectionImage.createInspectionImage(originalFileNames.get(i) ,keys.get(i), result);
             imageEntities.add(entity);
 
             // API 응답용 DTO
@@ -124,6 +124,8 @@ public class InspectionService {
                 ImageResult imageResult = new ImageResult();
 
                 URL url = s3Service.generatePresignedUrl(image.getImageUrl(), 10); // 10분간 유효한 이미지 조회 링크 생성
+
+                imageResult.setFileName(image.getFileName());
                 imageResult.setImageUrl(url);
                 imageResult.setInspectResult(image.getResult());
 
@@ -154,6 +156,8 @@ public class InspectionService {
                 ImageResult imageResult = new ImageResult();
 
                 URL url = s3Service.generatePresignedUrl(image.getImageUrl(), 10); // 10분간 유효한 이미지 조회 링크 생성
+
+                imageResult.setFileName(image.getFileName());
                 imageResult.setImageUrl(url);
                 imageResult.setInspectResult(image.getResult());
 
