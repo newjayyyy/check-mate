@@ -27,6 +27,23 @@ spring:
     rememberme:
       key: ${REMEMBER_ME_KEY}
 
+  servlet:
+    multipart:
+      max-file-size: 10MB # 업로드 파일 크기 제한
+
+cloud:
+  aws:
+    s3:
+      bucket: deepcheck-image-storage
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+
+# FastApi 모델 서버 기본 URL
+model.server.url: http://localhost:8000
+
 logging:
   level:
     org.hibernate.SQL: debug

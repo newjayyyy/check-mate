@@ -25,6 +25,18 @@ spring:
     rememberme:
       key: testKey
 
+cloud:
+  aws:
+    s3:
+      bucket: deepcheck-image-storage
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: test
+      secret-key: test
+
+model.server.url: http://localhost:8000
+
 logging:
   level:
     org.hibernate.SQL: debug

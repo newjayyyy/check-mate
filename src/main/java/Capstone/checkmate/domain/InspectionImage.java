@@ -15,6 +15,9 @@ public class InspectionImage {
     @Column(name = "inspection_image_id", updatable = false)
     private Long id;
 
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
+
     @Column(nullable = false)
     private String imageUrl;
 
@@ -31,8 +34,9 @@ public class InspectionImage {
     }
 
     //==생성 메서드==//
-    public static InspectionImage createInspectionImage(String imageUrl, InspectResult result) {
+    public static InspectionImage createInspectionImage(String fileName, String imageUrl, InspectResult result) {
         InspectionImage inspectionImage = new InspectionImage();
+        inspectionImage.fileName = fileName;
         inspectionImage.imageUrl = imageUrl;
         inspectionImage.result = result;
         return inspectionImage;
