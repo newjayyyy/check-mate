@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+import Capstone.checkmate.dto.MaskRealtimeRequest;
+import Capstone.checkmate.dto.MaskRealtimeResponse;
 
 import java.util.List;
 
@@ -27,5 +29,11 @@ public class MaskDetectionController {
         MaskUploadRequest requestDto = MaskUploadRequest.of(memberId, modelId, images);
         MaskUploadResponse responseDto = maskDetectionService.inspect(requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+    
+    @PostMapping("/realtime")
+    public ResponseEntity<MaskRealtimeResponse> realtimePredict(@RequestBody MaskRealtimeRequest request) {
+        MaskRealtimeResponse response = maskDetectionService.predictRealtime(request);
+        return ResponseEntity.ok(response);
     }
 }

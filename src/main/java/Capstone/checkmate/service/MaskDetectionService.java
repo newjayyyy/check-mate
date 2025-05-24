@@ -2,7 +2,7 @@ package Capstone.checkmate.service;
 
 import Capstone.checkmate.domain.*;
 import Capstone.checkmate.dto.*;
-import Capstone.checkmate.repository.MaskDetectionRepository;
+import Capstone.checkmate.repository.InspectionRepository;
 import Capstone.checkmate.repository.MemberRepository;
 import Capstone.checkmate.repository.ModelRepository;
 import jakarta.transaction.Transactional;
@@ -26,11 +26,11 @@ import java.util.Map;
 @Transactional
 public class MaskDetectionService {
 
-    private final MaskDetectionRepository maskDetectionRepository;
+    private final InspectionRepository inspectionRepository;
     private final ModelRepository modelRepository;
     private final MemberRepository memberRepository;
     private final S3Service s3Service;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     @Value("${model.server.url}")
     private String modelServerUrl;
@@ -53,6 +53,15 @@ public class MaskDetectionService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
+        List<Inspection> inspections = inspectionRepository.findAllByModel(model);
+        int currentImageCount = inspections.stream()
+                .mapToInt(Inspection::getTotalCount)
+                .sum();
+
+        final int MAX_TOTAL_IMAGE_COUNT = 100;
+        if (currentImageCount >= MAX_TOTAL_IMAGE_COUNT && !inspections.isEmpty()) {
+            inspectionRepository.delete(inspections.get(0));
+        }
         List<String> uploadedKeys = new ArrayList<>();
         List<String> fileNames = new ArrayList<>();
         
@@ -113,7 +122,7 @@ public class MaskDetectionService {
 
         Inspection inspection = Inspection.createInspection(member, model,
                 inspectionImages.toArray(new InspectionImage[0]));
-        maskDetectionRepository.save(inspection);
+        inspectionRepository.save(inspection);
 
         return MaskUploadResponse.builder()
                 .totalCount(inspection.getTotalCount())
@@ -133,5 +142,21 @@ public class MaskDetectionService {
         return lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".img");
     }
 
+    //실시간 이미지 추론
+    public MaskRealtimeResponse predictRealtime(MaskRealtimeRequest request) {
+        String fastApiUrl = modelServerUrl + "/realtime";
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<MaskRealtimeRequest> httpEntity = new HttpEntity<>(request, headers);
+
+        ResponseEntity<MaskRealtimeResponse> response = restTemplate.postForEntity(
+                fastApiUrl,
+                httpEntity,
+                MaskRealtimeResponse.class
+        );
+
+        return response.getBody();
+    }
 }
