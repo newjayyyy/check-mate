@@ -109,12 +109,17 @@ public class InspectionService {
     /**
      * 전체 Inspection 조회
      */
-    public List<InspectionViewResponse> viewAllInspections() {
+    public List<InspectionViewResponse> viewAllInspections(InspectionRequest request) {
         List<InspectionViewResponse> result = new ArrayList<>();
         List<Inspection> inspections = inspectionRepository.findAll(); // entity 조회
 
+        String modelName = request.getModelName();
+        modelRepository.findByName(modelName).orElseThrow(() -> new IllegalStateException("Model does not exist"));
+
         // dto 생성 및 추가
         for (Inspection inspection : inspections) {
+            if(!inspection.getModel().getName().equals(modelName)) continue; // 원하는 모델 명과 다르면 continue로 넘기기
+
             InspectionViewResponse dto = new InspectionViewResponse();
             dto.setInspectId(inspection.getId());
             dto.setUploadedDate(inspection.getUploadedAt());
@@ -141,12 +146,16 @@ public class InspectionService {
     /**
      * 날짜 기반 Inspection 조회
      */
-    public List<InspectionViewResponse> viewInspectionsByDate(LocalDateTime from, LocalDateTime to) {
+    public List<InspectionViewResponse> viewInspectionsByDate(String modelName, LocalDateTime from, LocalDateTime to) {
         List<InspectionViewResponse> result = new ArrayList<>();
         List<Inspection> inspections = inspectionRepository.findAllByUploadedAtBetween(from, to); // entity 조회
 
+        modelRepository.findByName(modelName).orElseThrow(() -> new IllegalStateException("Model does not exist"));
+
         // dto 생성 및 추가
         for (Inspection inspection : inspections) {
+            if(!inspection.getModel().getName().equals(modelName)) continue; // 원하는 모델 명과 다르면 continue로 넘기기
+
             InspectionViewResponse dto = new InspectionViewResponse();
             dto.setInspectId(inspection.getId());
             dto.setUploadedDate(inspection.getUploadedAt());

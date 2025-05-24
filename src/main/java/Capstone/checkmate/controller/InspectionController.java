@@ -1,5 +1,6 @@
 package Capstone.checkmate.controller;
 
+import Capstone.checkmate.dto.InspectionRequest;
 import Capstone.checkmate.dto.InspectionResultResponse;
 import Capstone.checkmate.dto.InspectionViewRequest;
 import Capstone.checkmate.dto.InspectionViewResponse;
@@ -33,18 +34,20 @@ public class InspectionController {
 
     // 전체 검사 조회 API
     @PostMapping("/api/viewAllInspections")
-    public ResponseEntity<List<InspectionViewResponse>> viewAllInspections() {
-        List<InspectionViewResponse> responses = inspectionService.viewAllInspections();
+    public ResponseEntity<List<InspectionViewResponse>> viewAllInspections(@RequestBody InspectionRequest request) {
+        List<InspectionViewResponse> responses = inspectionService.viewAllInspections(request);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     // 날짜 기반 검사 조회 API
     @PostMapping("/api/viewInspectionsByDate")
     public ResponseEntity<List<InspectionViewResponse>> viewInspectionsByDate(@RequestBody InspectionViewRequest request) {
+        String modelName = request.getModelName();
+        // LocalDate -> LocalDateTime 변환 목적
         LocalDateTime fromDate = request.getFrom().atStartOfDay();
         LocalDateTime toDate = request.getTo().atTime(LocalTime.MAX);
 
-        List<InspectionViewResponse> responses = inspectionService.viewInspectionsByDate(fromDate, toDate);
+        List<InspectionViewResponse> responses = inspectionService.viewInspectionsByDate(modelName, fromDate, toDate);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 

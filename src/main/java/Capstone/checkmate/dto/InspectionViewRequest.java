@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class InspectionViewRequest {
+    private String modelName;
     private LocalDate from;
     private LocalDate to;
 }
