@@ -1,13 +1,16 @@
-import MaskCheckPage from './checkmate/maskCheckPage'; // 네가 만든 컴포넌트 경로
+import MaskCheckPage from './checkmate/maskCheckPage'; 
+import MagnetCheckPage from './checkmate/magnetCheckPage';
+import ResultPage from './checkmate/resultPage';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MagnetCheckPage from './checkmate/magnetCheckPage';
+
 function App() {
   return (
      <Router>
       <Routes>
         <Route path="/" element={<MaskCheckPage />} />
         <Route path="/magnet" element={<MagnetCheckPage />} />
+        <Route path="/result" element={<ResultPage />} />
       </Routes>
     </Router>
   )

@@ -58,6 +58,7 @@ export default function MaskCheckPage() {
                 <div className="relative rounded-t-lg w-full max-w-[1440px] h-[60px] bg-[#545454] ">
                     {/* 이미지 버튼 */}
                     <button
+                    onClick={() => navigate('/result')}
                         className="absolute left-4 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center bg-[#545454] rounded-md hover:bg-[#faede0] transition">
                         <img
                             src="/sidebar.png"
@@ -67,7 +68,7 @@ export default function MaskCheckPage() {
                     </button>
                     <div className="h-full flex items-center justify-center">
                         <span className="block font-[200] text-[30px] text-center text-[#faede0] font-raleway leading-none">
-                            부품 결함함 검사
+                            부품 결함 검사
                         </span>
                     </div>
                     {/* 카메라 영역 */}
