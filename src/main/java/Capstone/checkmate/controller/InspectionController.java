@@ -1,9 +1,6 @@
 package Capstone.checkmate.controller;
 
-import Capstone.checkmate.dto.InspectionRequest;
-import Capstone.checkmate.dto.InspectionResultResponse;
-import Capstone.checkmate.dto.InspectionViewRequest;
-import Capstone.checkmate.dto.InspectionViewResponse;
+import Capstone.checkmate.dto.*;
 import Capstone.checkmate.service.InspectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -23,13 +19,39 @@ public class InspectionController {
 
     private final InspectionService inspectionService;
 
-    // 검사 요청 및 이미지 업로드 API
+    // 부품 검사 요청 및 이미지 업로드 API
     @PostMapping("/api/inspections")
-    public ResponseEntity<InspectionResultResponse> createInspection(Authentication auth, @RequestParam String model, @RequestParam("files") List<MultipartFile> files) {
+    public ResponseEntity<InspectionResultResponse> createInspection(
+            Authentication auth,
+            @RequestParam String model,
+            @RequestParam("files") List<MultipartFile> files)
+    {
+
         String member = auth.getName();
-        InspectionResultResponse results = inspectionService.createInspection(member, model, files);
+        InspectionResultResponse results = (InspectionResultResponse) inspectionService.createInspection(member, model, files);
 
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    // 마스크 착용 검사 요청 및 이미지 업로드 API
+    @PostMapping("/api/mask")
+    public ResponseEntity<MaskUploadResponse> inspectImages(
+            Authentication auth,
+            @RequestParam String model,
+            @RequestParam("files") List<MultipartFile> files)
+    {
+
+        String member = auth.getName();
+        MaskUploadResponse responseDto = (MaskUploadResponse) inspectionService.createInspection(member, model, files);
+
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 마스크 실시간 검사 (Base64 인코딩 이미지)
+    @PostMapping("/api/mask/realtime")
+    public ResponseEntity<MaskRealtimeResponse> realtimePredict(@RequestBody MaskRealtimeRequest request) {
+        MaskRealtimeResponse response = inspectionService.predictRealtime(request);
+        return ResponseEntity.ok(response);
     }
 
     // 전체 검사 조회 API
