@@ -58,7 +58,7 @@ export default function MaskCheckPage() {
                 <div className="relative rounded-t-lg w-full max-w-[1440px] h-[60px] bg-[#545454] ">
                     {/* 이미지 버튼 */}
                     <button
-                    onClick={() => navigate('/result')}
+                        onClick={() => navigate('/result')}
                         className="absolute left-4 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center bg-[#545454] rounded-md hover:bg-[#faede0] transition">
                         <img
                             src="/sidebar.png"
@@ -114,44 +114,33 @@ export default function MaskCheckPage() {
                     </div>
 
                     {/* 오른쪽 하단 이미지 버튼 2개 */}
-          <div className="relative ">
-            <div className="absolute bottom-2 right-4 flex gap-2">
-            {/* 버튼 1 */}
-            <button 
-            onClick={() => navigate('/')}
-                className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
-              <img
-                src="/mask.png"
-                alt="버튼1"
-                className="w-11 h-11 group-hover:hidden"
-              />
+                    <div className="relative ">
+                        <div className="absolute bottom-2 right-4 flex gap-2">
+                            {/* 버튼 1 */}
+                            <button
+                                onClick={() => navigate('/mask')}
+                                className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
+                                <img
+                                    src="/mask.png"
+                                    alt="버튼1"
+                                    className="w-11 h-11 group-hover:hidden"
+                                />
 
-            </button>
+                            </button>
 
-            {/* 버튼 2 */}
-            <button className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
-              <img
-                src="/back.png"
-                alt="버튼2"
-                className="w-13 h-13 group-hover:hidden"
-              />
+                            {/* 버튼 2 */}
+                            <button
+                                onClick={() => navigate('/main')}
+                                className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
+                                <img
+                                    src="/back.png"
+                                    alt="버튼2"
+                                    className="w-13 h-13 group-hover:hidden"
+                                />
 
-            </button>
-          </div>
-           </div>
-
-
-                    {/* 찍은 사진 미리보기 */}
-                    {/*{capturedImage && (
-          <div className="w-[400px] mx-auto mt-4">
-            <img
-              src={capturedImage}
-              alt="Captured"
-              className="rounded-md border border-gray-300"
-            />
-          </div>
-        )}*/}
-
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

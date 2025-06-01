@@ -128,7 +128,9 @@ export default function MaskCheckPage() {
             </button>
 
             {/* 버튼 2 */}
-            <button className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
+            <button 
+            onClick={() => navigate('/main')}
+            className="w-15 h-15 flex items-center justify-center rounded-full bg-[#faede0] hover:bg-[#545454] transition">
               <img
                 src="/back.png"
                 alt="버튼2"
@@ -138,17 +140,6 @@ export default function MaskCheckPage() {
             </button>
           </div>
            </div>
-
-          {/* 찍은 사진 미리보기 */}
-          {/*{capturedImage && (
-          <div className="w-[400px] mx-auto mt-4">
-            <img
-              src={capturedImage}
-              alt="Captured"
-              className="rounded-md border border-gray-300"
-            />
-          </div>
-        )}*/}
 
         </div>
       </div>

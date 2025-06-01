@@ -11,7 +11,7 @@ export default function ResultPage() {
         <div className="relative rounded-t-lg w-full max-w-[1440px] h-[60px] bg-[#545454] ">
           {/* 이미지 버튼 */}
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/main')}
             className="absolute left-4 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center bg-[#545454] rounded-md hover:bg-[#faede0] transition">
             <img
               src="/back.png"
