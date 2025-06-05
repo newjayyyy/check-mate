@@ -43,7 +43,7 @@ export default function LoginPage({ onSwitchToSignup }) {
               <input
                 type="user"
                 placeholder="사원번호"
-                value={user}
+                value={username}
                 onChange={(e) => setUser(e.target.value)}
                 className="p-3 border bg-[#ffffff]  border-gray-300 text-gray-800 px-6 py-3"
               />
