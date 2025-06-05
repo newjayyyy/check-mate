@@ -14,10 +14,10 @@ export default function SignupPage({ onSwitchToLogin }) {
     const res = await axios.post(
       'https://checkmate-iry6.onrender.com/api/signup',
       {
-        username: '4321',
-        password: '4321',
-        name: 'jung',
-        email: 'jung@gmail.com'
+        username,
+        password,
+        name,
+        email
       },
       {
         headers: {
@@ -56,7 +56,7 @@ export default function SignupPage({ onSwitchToLogin }) {
             className="p-3 border bg-[#ffffff] border-gray-300 rounded-md"
           />
           <input
-            type="text"
+            type="password"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -70,7 +70,7 @@ export default function SignupPage({ onSwitchToLogin }) {
             className="p-3 border bg-[#ffffff] border-gray-300 rounded-md"
           />
           <input
-            type="text"
+            type="email"
             placeholder="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

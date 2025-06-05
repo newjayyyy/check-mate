@@ -3,7 +3,26 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function MainPage() {
-  const navigate = useNavigate();
+
+   const navigate = useNavigate();
+   const handleLogout = async () => {
+    try {
+      const res = await axios.get(`https://checkmate-iry6.onrender.com/api/logout`, 
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      console.log('로그아웃 성공공:', res.data);
+      navigate('/');
+    } catch (err) {
+      console.error('로그아웃웃 실패:', err);
+      
+
+    }
+  };
+  
   return (
     <div className=" min-h-screen flex items-center p-3">
       <div className="rounded-lg w-full max-w-[1000px] h-[650px] md:max-w-[800px] lg:max-w-[1000px] mx-auto flex-grow-0  bg-[#faede0]">
@@ -63,11 +82,12 @@ export default function MainPage() {
 
         <div className="flex items-center justify-center">
           <button
-            onClick={() => navigate('/')}
+          type='button'
+            onClick={handleLogout}
             className="text-slate-600 text-xl underline">로그아웃</button>
 
         </div>
-        {/* 로그아웃 */}
+        
 
       </div>
     </div>
