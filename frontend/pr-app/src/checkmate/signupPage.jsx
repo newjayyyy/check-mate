@@ -7,24 +7,31 @@ export default function SignupPage({ onSwitchToLogin }) {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
-  const handleSignup = async () => {
-    try {
-      const res = await axios.post(`${import.meta.env.VITE_CHECKMATE_SERVER_IP}/api/signup`, {
-        username,
-        password,
-        name,
-        email
-      });
-      console.log('회원가입 성공:', res.data);
-      navigate('/');
-    } catch (err) {
-      console.error('회원가입 실패:', err);
-      alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-}
-    
-  };
-   const navigate = useNavigate();
+ const handleSignup = async () => {
+  try {
+    const res = await axios.post(
+      'https://checkmate-iry6.onrender.com/api/signup',
+      {
+        username: '4321',
+        password: '4321',
+        name: 'jung',
+        email: 'jung@gmail.com'
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    );
+    console.log('회원가입 성공:', res.data);
+  } catch (err) {
+    console.error('회원가입 실패:', err);
+  }
+};
+
   return (
     <div className="min-h-screen flex items-center p-3">
     <div className="rounded-lg w-full max-w-[1000px] h-[650px] md:max-w-[800px] lg:max-w-[1000px] mx-auto flex-grow-0  bg-[#faede0]">
@@ -41,28 +48,28 @@ export default function SignupPage({ onSwitchToLogin }) {
         <form className="flex flex-col gap-4">
           
           <input
-            type="username"
+            type="text"
             placeholder="사원번호"
             value={username}
             onChange={(e) => setUser(e.target.value)}
             className="p-3 border bg-[#ffffff] border-gray-300 rounded-md"
           />
           <input
-            type="password"
+            type="text"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="p-3 border bg-[#ffffff] border-gray-300 rounded-md"
           />
           <input
-            type="name"
+            type="text"
             placeholder="이름"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="p-3 border bg-[#ffffff] border-gray-300 rounded-md"
           />
           <input
-            type="email"
+            type="text"
             placeholder="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
