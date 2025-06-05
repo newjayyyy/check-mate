@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 export default function MainPage() {
 
@@ -12,7 +12,8 @@ export default function MainPage() {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
+        },
+         withCredentials: true
       });
       console.log('로그아웃 성공:', res.data);
       navigate('/');
