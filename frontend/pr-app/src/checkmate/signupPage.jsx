@@ -27,6 +27,7 @@ export default function SignupPage({ onSwitchToLogin }) {
       }
     );
     console.log('회원가입 성공:', res.data);
+    navigate("/");
   } catch (err) {
     console.error('회원가입 실패:', err);
   }
