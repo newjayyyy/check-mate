@@ -14,10 +14,10 @@ export default function MainPage() {
           'Accept': 'application/json'
         }
       });
-      console.log('로그아웃 성공공:', res.data);
+      console.log('로그아웃 성공:', res.data);
       navigate('/');
     } catch (err) {
-      console.error('로그아웃웃 실패:', err);
+      console.error('로그아웃 실패:', err);
       
 
     }

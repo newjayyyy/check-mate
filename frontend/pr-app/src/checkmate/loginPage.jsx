@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function LoginPage({ onSwitchToSignup }) {
-  const [user, setUser] = useState('');
+  const [username, setUser] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
