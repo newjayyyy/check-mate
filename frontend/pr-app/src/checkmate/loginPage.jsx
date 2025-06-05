@@ -8,12 +8,19 @@ export default function LoginPage({ onSwitchToSignup }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${import.meta.env.CHECKMATE_SERVER_IP}/api/login`, {
-        user,
-        password
-      });
+      const res = await axios.post(`https://checkmate-iry6.onrender.com/api/login`, {
+        username :'4321',
+        password : '4321'
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    );
       console.log('로그인 성공:', res.data);
-       navigate('/main');
+      navigate('/main');
     } catch (err) {
       console.error('로그인 실패:', err);
       alert('이메일 또는 비밀번호가 올바르지 않습니다.');
@@ -50,6 +57,7 @@ export default function LoginPage({ onSwitchToSignup }) {
 
               <div className="flex items-center justify-center">
                 <button
+                type="button"
                   onClick={handleLogin}
                   className="bg-gray-700 text-white px-16 py-3 mb-6">사원인증</button>
 

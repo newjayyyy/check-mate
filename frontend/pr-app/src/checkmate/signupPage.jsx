@@ -27,7 +27,7 @@ export default function SignupPage({ onSwitchToLogin }) {
       }
     );
     console.log('회원가입 성공:', res.data);
-    navigate("/");
+    navigate('/');
   } catch (err) {
     console.error('회원가입 실패:', err);
   }
@@ -79,7 +79,7 @@ export default function SignupPage({ onSwitchToLogin }) {
           
           <button
             onClick={handleSignup}
-            type="submit"
+            type="button"
             className="bg-gray-800 text-white py-3 mt-4 rounded-md"
           >
             가입하기
