@@ -47,7 +47,7 @@ export default function MaskCheckPage() {
 
         // 현재 비디오 프레임을 캔버스에 그림
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+    };
     const handleInspect = async () => {
     if (!videoRef.current || !canvasRef.current) return;
 
@@ -87,13 +87,13 @@ export default function MaskCheckPage() {
     } catch (err) {
         console.error("서버 전송 실패:", err);
     }
-
+    };
     const handleClick = () => {
     takePhoto();        // 기존 로직
     handleInspect();    // 검사 로직
 };
 
-};
+
 
     return (
         <div className=" min-h-screen flex items-center p-3">
@@ -190,4 +190,4 @@ export default function MaskCheckPage() {
         </div>
     );
 }
-}
+

@@ -21,16 +21,7 @@ export default function MainPage() {
       console.error('로그아웃 실패:', err);
     }
   }
-  const [userInfo, setUserInfo] = useState({ employeeId: "", name: "" });
- useEffect(() => {
-    axios.get('https://checkmate-iry6.onrender.com/api/me', { withCredentials: true }) // withCredentials는 쿠키 인증 시 필요할 수 있음
-      .then((res) => {
-        setUserInfo(res.data);
-      })
-      .catch((err) => {
-        console.error("사용자 정보를 가져오는 데 실패했습니다.", err);
-      });
-  }, []);
+ 
 
   return (
     <div className=" min-h-screen flex items-center p-3">
@@ -54,8 +45,8 @@ export default function MainPage() {
 
         {/* 사원정보 */}
         <div className="flex items-center justify-center gap-5 mb-12 mt-5 md:mb-12 md:mt-15 text-neutral-700 text-[20px] md:text-3xl font-light ">
-          <span>사원번호: {userInfo.username}</span>
-          <span>이름: {userInfo.name}</span>
+          <span>사원번호:1234</span>
+          <span>이름:jung</span>
         </div>
 
         {/* 이미지 두 개 */}
