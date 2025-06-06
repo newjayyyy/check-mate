@@ -73,6 +73,7 @@ export default function MaskCheckPage() {
         "https://checkmate-iry6.onrender.com/api/mask",
         formData,
         {
+           withCredentials: true, 
           headers: {
             "Content-Type": "multipart/form-data",
           },
