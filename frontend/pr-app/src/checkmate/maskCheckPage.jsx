@@ -187,11 +187,8 @@ export default function MaskCheckPage() {
           </div>
            </div>
 
-           {inspectionResult && (
-  <div className="text-center text-xl font-semibold text-green-700 mt-4">
-    검사 결과: {JSON.stringify(inspectionResult)}
-  </div>
-)}
+          
+
 
         </div>
       </div>
