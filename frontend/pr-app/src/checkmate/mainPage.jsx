@@ -19,11 +19,19 @@ export default function MainPage() {
       navigate('/');
     } catch (err) {
       console.error('로그아웃 실패:', err);
-      
-
     }
-  };
-  
+  }
+  const [userInfo, setUserInfo] = useState({ employeeId: "", name: "" });
+ useEffect(() => {
+    axios.get('https://checkmate-iry6.onrender.com/api/me', { withCredentials: true }) // withCredentials는 쿠키 인증 시 필요할 수 있음
+      .then((res) => {
+        setUserInfo(res.data);
+      })
+      .catch((err) => {
+        console.error("사용자 정보를 가져오는 데 실패했습니다.", err);
+      });
+  }, []);
+
   return (
     <div className=" min-h-screen flex items-center p-3">
       <div className="rounded-lg w-full max-w-[1000px] h-[650px] md:max-w-[800px] lg:max-w-[1000px] mx-auto flex-grow-0  bg-[#faede0]">
@@ -46,8 +54,8 @@ export default function MainPage() {
 
         {/* 사원정보 */}
         <div className="flex items-center justify-center gap-5 mb-12 mt-5 md:mb-12 md:mt-15 text-neutral-700 text-[20px] md:text-3xl font-light ">
-          <span>사원번호: 00012345</span>
-          <span>이름: 김바른</span>
+          <span>사원번호: {userInfo.username}</span>
+          <span>이름: {userInfo.name}</span>
         </div>
 
         {/* 이미지 두 개 */}
@@ -76,7 +84,7 @@ export default function MainPage() {
         </div>
 
         {/* 이미지 하단 텍스트 */}
-        <div className="flex items-center justify-center gap-55 text-[20px] md:text-[25px] font-bold text-neutral-800 mb-5">
+        <div className="flex items-center justify-center gap-15 md:gap-55 text-[16px] md:text-[25px] font-bold text-neutral-800 mb-5">
           <span>마스크 착용 검사</span>
           <span>정상 부품 검사</span>
         </div>

@@ -30,6 +30,7 @@ export default function SignupPage({ onSwitchToLogin }) {
     navigate('/');
   } catch (err) {
     console.error('회원가입 실패:', err);
+    alert('회원가입 실패');
   }
 };
 
