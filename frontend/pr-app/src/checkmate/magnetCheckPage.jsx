@@ -13,7 +13,8 @@ export default function MaskCheckPage() {
         async function enableCamera() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { exact: "environment" } }, // 셀카 모드
+                     video: { facingMode: "user" }, // 셀카 모드
+                    //video: { facingMode: { exact: "environment" } }, // 셀카 모드
                     audio: false,
                 });
                 if (videoRef.current) {
@@ -66,20 +67,16 @@ export default function MaskCheckPage() {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const fileName = `capture-${timestamp}.png`;
 
-    // 로컬 저장
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
 
     // 2. 서버 업로드
-    const formData = new FormData();
-    formData.append("model", "part"); // 필요한 모델 이름
-    formData.append("files", new File([blob], fileName, { type: "image/png" }));
+   
 
     try {
-        const response = await axios.post("https://checkmate-iry6.onrender.com/api/inspections", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
+        const response = await axios.post("https://checkmate-iry6.onrender.com/api/inpections", null, {
+  params: {
+    model: "part",
+    files: [base64],
+  },
         });
 
         // 결과 저장

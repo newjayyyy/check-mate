@@ -48,45 +48,47 @@ export default function MaskCheckPage() {
     // 현재 비디오 프레임을 캔버스에 그림
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
   };
-   const handleInspect = async () => {
-    if (!videoRef.current || !canvasRef.current) return;
-
-    const video = videoRef.current;
+  const uploadImage = async () => {
+  if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+    // 캔버스 → dataURL → Blob
     const imageDataUrl = canvas.toDataURL("image/png");
+    const res = await fetch(imageDataUrl);
+    const blob = await res.blob();
 
-    // 1. 저장용: Blob 변환 → 파일명: timestamp.png
-    const blob = await (await fetch(imageDataUrl)).blob();
+    // 파일명 생성
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const fileName = `capture-${timestamp}.png`;
 
-    // 2. 서버 업로드
+    // Blob → File
+    const file = new File([blob], fileName, { type: "image/png" });
+  // FormData 구성
     const formData = new FormData();
-    formData.append("model", "mask"); // 필요한 모델 이름
-    formData.append("files", new File([blob], fileName, { type: "image/png" }));
-const base64 = imageDataUrl.split(",")[1];
-    try {
-        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", null, {
-  params: {
-    model: "mask",
-    files: [base64],
-  },
-});
+    formData.append("model", "mask");
+    formData.append("files", file);
 
-console.log("검사 결과:", response.data);
+    try {
+      const response = await axios.post(
+        "https://checkmate-iry6.onrender.com/api/mask",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("검사 결과:", response.data);
+      alert("업로드 성공");
     } catch (err) {
-        console.error("서버 전송 실패:", err);
+      console.error("서버 전송 실패:", err);
+      alert("업로드 실패");
     }
   };
     const handleClick = () => {
     takePhoto();        // 기존 로직
-    handleInspect();    // 검사 로직
+    uploadImage();    // 검사 로직
 };
   
   return (
