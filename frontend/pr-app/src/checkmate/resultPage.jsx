@@ -26,16 +26,16 @@ export default function ResultPage() {
             </span>
           </div>
 
-          <div className="h-[600px] overflow-auto grid grid-cols-4 gap-2 p-4 overscroll-contain">
-            {Array.from({ length: 12 }, (_, i) => (
-              <div
-                key={i}
-                className="w-[200px] h-[200px] bg-white rounded-md m-[20px] flex items-center justify-center"
-              >
-                {String(i + 1).padStart(2, '0')}
-              </div>
-            ))}
-          </div>
+          <div className="h-[600px] overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 overscroll-contain">
+  {Array.from({ length: 12 }, (_, i) => (
+    <div
+      key={i}
+      className="w-full h-[200px] bg-white rounded-md flex items-center justify-center"
+    >
+      {String(i + 1).padStart(2, '0')}
+    </div>
+  ))}
+</div>
 
 
         </div>
