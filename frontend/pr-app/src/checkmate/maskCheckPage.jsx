@@ -78,10 +78,14 @@ export default function MaskCheckPage() {
     formData.append("files", new File([blob], fileName, { type: "image/png" }));
 
     try {
-        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-
+        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", null, {
+         params: {
+          model: "mask",
+          files: [imageDataUrl], // 배열 형태로 전달
+        },
+    }
+  );
+  console.log("서버 응답:", response.data);
         // 결과 저장
         setInspectionResult(response.data); // 결과를 상태에 저장
     } catch (err) {
@@ -182,6 +186,12 @@ export default function MaskCheckPage() {
             </button>
           </div>
            </div>
+
+           {inspectionResult && (
+  <div className="text-center text-xl font-semibold text-green-700 mt-4">
+    검사 결과: {JSON.stringify(inspectionResult)}
+  </div>
+)}
 
         </div>
       </div>
