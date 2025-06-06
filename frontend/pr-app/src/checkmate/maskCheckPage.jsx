@@ -70,19 +70,16 @@ export default function MaskCheckPage() {
     const formData = new FormData();
     formData.append("model", "mask"); // 필요한 모델 이름
     formData.append("files", new File([blob], fileName, { type: "image/png" }));
-
+const base64 = imageDataUrl.split(",")[1];
     try {
-        const response = await axios.post(
-    "https://checkmate-iry6.onrender.com/api/mask",
-    formData, // ✅ body에 formData를 직접 넣어야 함
-    {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      },
-      withCredentials: true
-    }
-  );
-  console.log("검사 결과:", response.data);
+        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", null, {
+  params: {
+    model: "mask",
+    files: [base64],
+  },
+});
+
+console.log("검사 결과:", response.data);
     } catch (err) {
         console.error("서버 전송 실패:", err);
     }
