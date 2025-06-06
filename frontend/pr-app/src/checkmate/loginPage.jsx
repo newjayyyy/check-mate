@@ -13,6 +13,7 @@ export default function LoginPage({ onSwitchToSignup }) {
         password
       },
       {
+       withCredentials: true, 
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
