@@ -78,7 +78,7 @@ export default function MaskCheckPage() {
     formData.append("files", new File([blob], fileName, { type: "image/png" }));
 
     try {
-        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", null, {
+        const response = await axios.post("https://checkmate-iry6.onrender.com/api/mask", {
          params: {
           model: "mask",
           files: [imageDataUrl], // 배열 형태로 전달
