@@ -26,7 +26,7 @@ export default function MainPage() {
     const fetchUserInfo = async () => {
       try {
         const res = await axios.get("https://checkmate-iry6.onrender.com/api/me", {
-          withCredentials: true, // 쿠키 포함
+          withCredentials: true // 쿠키 포함
         });
         setEmployee({
           username: res.data.username,
