@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function ResultPage() {
+export default function PartResultPage() {
 
   const [results, setResults] = useState([]);
 
@@ -10,7 +10,7 @@ export default function ResultPage() {
     try {
       // 두 모델 결과 모두 요청
       const response = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllInspections',{
-           modelName:"mask"
+           modelName:"part"
           },
           { headers: { "Content-Type": "application/json" } }
         );
@@ -51,7 +51,7 @@ export default function ResultPage() {
           </button>
           <div className="h-full flex items-center justify-center">
             <span className="block font-[200] text-[30px] text-center text-[#faede0] font-raleway leading-none">
-              검사 결과
+              부품 검사 결과
             </span>
           </div>
 

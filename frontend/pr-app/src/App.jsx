@@ -2,7 +2,8 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MaskCheckPage from './checkmate/maskCheckPage'; 
 import MagnetCheckPage from './checkmate/magnetCheckPage';
-import ResultPage from './checkmate/resultPage';
+import MaskResultPage from './checkmate/maskResultPage';
+import PartResultPage from './checkmate/partResultPage';
 import MainPage from "./checkmate/mainPage";
 import SignupPage from "./checkmate/signupPage";
 import LoginPage from './checkmate/loginPage';
@@ -17,7 +18,8 @@ function App() {
           <Route path="/main" element={<MainPage />} />
           <Route path="/mask" element={<MaskCheckPage />} />
           <Route path="/magnet" element={<MagnetCheckPage />} />
-          <Route path="/result" element={<ResultPage />} />
+          <Route path="/maskresult" element={<MaskResultPage />} />
+          <Route path="/partresult" element={<PartResultPage />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
     

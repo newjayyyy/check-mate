@@ -47,13 +47,14 @@ export default function MainPage() {
         {/* 타이틀 */}
         <div className="relative rounded-t-lg w-full max-w-[1440px] h-[60px] bg-[#545454] ">
           <button
-            onClick={() => navigate('/result')}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center rounded-md bg-[#545454] hover:bg-[#faede0] transition">
-            <img
-              src="/sidebar.png"
-              alt="sidebar"
-              className="w-[20px] h-[20px]"
-            />
+            onClick={() => navigate('/maskresult')}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-[150px] h-[36px] flex items-center justify-center rounded-md text-[#ffffff] bg-[#545454] hover:bg-[#faede0] transition">
+            마스크 검사 결과
+          </button>
+          <button
+            onClick={() => navigate('/partresult')}
+            className="absolute left-45 top-1/2 -translate-y-1/2 w-[120px] h-[36px] flex items-center justify-center rounded-md text-[#ffffff] bg-[#545454] hover:bg-[#faede0] transition">
+            부품 검사 결과
           </button>
         </div>
         <div className="relative w-full max-w-[1440px] h-[60px] mt-5 md:mt-5 md:mb-10">
