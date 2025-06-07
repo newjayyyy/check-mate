@@ -9,7 +9,7 @@ export default function ResultPage() {
   const loadResult = async () => {
     try {
       // 두 모델 결과 모두 요청
-      const responses = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllInspections',{
+      const response = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllInspections',{
            modelName:"mask"
           },
           { headers: { "Content-Type": "application/json" } }
@@ -25,7 +25,7 @@ export default function ResultPage() {
 
       setResults(sorted);
     } catch (error) {
-      console.log("응답 데이터:", response.data);
+     
       console.error("검사 결과 불러오기 실패:", error);
     }
   };
@@ -56,7 +56,10 @@ export default function ResultPage() {
           </div>
 
           <div className="h-[600px] overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 overscroll-contain">
-  {results.map((result, i) => (
+  {results.length === 0 ? (
+  <p className="text-center text-gray-400">검사 결과가 없습니다.</p>
+) : (
+  results.map((result, i) => (
           <div
             key={i}
             className="w-full h-auto bg-white rounded-md shadow p-4 space-y-2"
@@ -66,7 +69,8 @@ export default function ResultPage() {
             </p>
             <p className="text-sm text-gray-700">검사 ID: {result.inspectId}</p>
 
-            {result.images.map((img, idx) => (
+            {result.images && result.images.length > 0 ? (
+            result.images.map((img, idx) => (
               <div key={idx} className="mt-2 space-y-1">
                 <img
                   src={img.imageUrl}
@@ -84,9 +88,13 @@ export default function ResultPage() {
                   검사 결과: {img.inspectResult}
                 </p>
 </div>
- ))}
+ ))
+  ) : (
+        <p className="text-sm text-gray-400">이미지 없음</p>
+  )}
  </div>
-        ))}
+  ))
+        )}
 
         </div>
 
