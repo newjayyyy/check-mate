@@ -111,7 +111,7 @@ export default function MaskCheckPage() {
                 <div className="relative rounded-t-lg w-full max-w-[1440px] h-[60px] bg-[#545454] ">
                     {/* 이미지 버튼 */}
                     <button
-                        onClick={() => navigate('/result')}
+                        onClick={() => navigate('/partresult')}
                         className="absolute left-4 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center bg-[#545454] rounded-md hover:bg-[#faede0] transition">
                         <img
                             src="/sidebar.png"
@@ -152,7 +152,7 @@ export default function MaskCheckPage() {
                         <button
                         type="button"
                             onClick={handleClick}
-                            className="group w-[200px] transition p-3 bg-gray-700 text-white mb-6 rounded-md"
+                            className="group w-[200px] transition p-3 bg-gray-700  hover:bg-gray-400 text-white mb-6 rounded-md"
                         >검사하기
                             
                         </button>
