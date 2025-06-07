@@ -11,6 +11,7 @@ export default function PartResultPage() {
       // 두 모델 결과 모두 요청
       const response = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllInspections',{
            modelName:"part"
+          },{withCredentials: true // 쿠키 포함
           },
           { headers: { "Content-Type": "application/json" } }
         );

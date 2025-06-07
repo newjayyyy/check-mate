@@ -21,7 +21,7 @@ export default function MainPage() {
       console.error('로그아웃 실패:', err);
     }
   }
-  const [employee, setEmployee] = useState({ username: "", name: "" });
+  const [employee, setEmployee] = useState({ username: "" });
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -30,7 +30,7 @@ export default function MainPage() {
         });
         setEmployee({
           username: res.data.username,
-          name: res.data.name,
+
         });
       } catch (err) {
         console.error("사용자 정보 불러오기 실패:", err);
