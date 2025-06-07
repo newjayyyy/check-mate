@@ -9,7 +9,7 @@ export default function ResultPage() {
   const loadResult = async () => {
     try {
       // 두 모델 결과 모두 요청
-      const responses = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllinspections',{
+      const responses = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllInspections',{
            modelName:"mask"
           },
           { headers: { "Content-Type": "application/json" } }
