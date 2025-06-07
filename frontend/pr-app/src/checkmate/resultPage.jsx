@@ -6,21 +6,17 @@ export default function ResultPage() {
 
   const [results, setResults] = useState([]);
 
-  const fetchInspectionResults = async () => {
+  const loadResult = async () => {
     try {
-      const modelNames = ["mask", "parts"];
-
       // 두 모델 결과 모두 요청
-      const promises = modelNames.map((modelName) =>
-        axios.post(
-          "https://checkmate-iry6.onrender.com/api/viewAllinspections",
-          { modelName },
+      const responses = await axios.post('https://checkmate-iry6.onrender.com/api/viewAllinspections',{
+           modelName:"mask"
+          },
           { headers: { "Content-Type": "application/json" } }
-        )
-      );
+        );
 
-      const responses = await Promise.all(promises);
-      const combinedResults = responses.map((res) => res.data);
+     
+      const combinedResults = response.data;
 
       // 정렬 (날짜 최신순)
       const sorted = combinedResults.sort(
@@ -29,12 +25,13 @@ export default function ResultPage() {
 
       setResults(sorted);
     } catch (error) {
+      console.log("응답 데이터:", response.data);
       console.error("검사 결과 불러오기 실패:", error);
     }
   };
 
   useEffect(() => {
-    fetchInspectionResults();
+    loadResult();
   }, []);
   const navigate = useNavigate();
 
