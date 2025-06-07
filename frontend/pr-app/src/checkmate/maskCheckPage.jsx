@@ -84,8 +84,7 @@ export default function MaskCheckPage() {
 
   // results 배열을 문자열로 변환 (예쁘게 정렬)
   const resultMsg = results.map((r, i) => (
-    `📄 결과 ${i + 1}:
-    - 파일명: ${r.fileName}
+    `- 파일명: ${r.fileName}
     - 결과: ${r.result}`
   )).join('\n\n');
   
