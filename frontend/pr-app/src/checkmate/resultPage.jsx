@@ -4,6 +4,38 @@ import axios from 'axios';
 
 export default function ResultPage() {
 
+  const [results, setResults] = useState([]);
+
+  const fetchInspectionResults = async () => {
+    try {
+      const modelNames = ["mask", "parts"];
+
+      // 두 모델 결과 모두 요청
+      const promises = modelNames.map((modelName) =>
+        axios.post(
+          "https://checkmate-iry6.onrender.com/api/viewAllinspections",
+          { modelName },
+          { headers: { "Content-Type": "application/json" } }
+        )
+      );
+
+      const responses = await Promise.all(promises);
+      const combinedResults = responses.map((res) => res.data);
+
+      // 정렬 (날짜 최신순)
+      const sorted = combinedResults.sort(
+        (a, b) => new Date(b.uploadedDate) - new Date(a.uploadedDate)
+      );
+
+      setResults(sorted);
+    } catch (error) {
+      console.error("검사 결과 불러오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchInspectionResults();
+  }, []);
   const navigate = useNavigate();
 
   return (
@@ -27,21 +59,42 @@ export default function ResultPage() {
           </div>
 
           <div className="h-[600px] overflow-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 overscroll-contain">
-  {Array.from({ length: 12 }, (_, i) => (
-    <div
-      key={i}
-      className="w-full h-[200px] bg-white rounded-md flex items-center justify-center"
-    >
-      {String(i + 1).padStart(2, '0')}
-    </div>
-  ))}
-</div>
+  {results.map((result, i) => (
+          <div
+            key={i}
+            className="w-full h-auto bg-white rounded-md shadow p-4 space-y-2"
+          >
+            <p className="text-sm text-gray-500">
+              업로드 날짜: {new Date(result.uploadedDate).toLocaleString()}
+            </p>
+            <p className="text-sm text-gray-700">검사 ID: {result.inspectId}</p>
 
+            {result.images.map((img, idx) => (
+              <div key={idx} className="mt-2 space-y-1">
+                <img
+                  src={img.imageUrl}
+                  alt={img.fileName}
+                  className="w-full h-32 object-cover rounded"
+                />
+                <p className="text-sm truncate">파일명: {img.fileName}</p>
+                <p
+                  className={`text-sm font-bold ${
+                    img.inspectResult === "ABNORMAL"
+                      ? "text-red-600"
+                      : "text-green-600"
+                  }`}
+                >
+                  검사 결과: {img.inspectResult}
+                </p>
+</div>
+ ))}
+ </div>
+        ))}
 
         </div>
 
       </div>
     </div>
-
+</div>
   );
 }

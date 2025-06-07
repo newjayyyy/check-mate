@@ -13,8 +13,7 @@ export default function MaskCheckPage() {
         async function enableCamera() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
-                     video: { facingMode: "user" }, // 셀카 모드
-                    //video: { facingMode: { exact: "environment" } }, // 셀카 모드
+                    video: { facingMode: { exact: "environment" } }, 
                     audio: false,
                 });
                 if (videoRef.current) {
@@ -61,7 +60,7 @@ export default function MaskCheckPage() {
 
     // 파일명 생성
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const fileName = `capture-${timestamp}.png`;
+    const fileName = `parts-${timestamp}.png`;
 
     // Blob → File
     const file = new File([blob], fileName, { type: "image/png" });
@@ -82,8 +81,18 @@ export default function MaskCheckPage() {
         }
       );
 
-      console.log("검사 결과:", response.data);
-      alert("업로드 성공");
+       const { inspectionId, results } = response.data;
+
+    // results 배열을 문자열로 변환 (예쁘게 정렬)
+  const resultMsg = results.map((r, i) => (
+    `📄 결과 ${i + 1}:
+    - 파일명: ${r.fileName}
+    - 결과: ${r.result}`
+  )).join('\n\n');
+  
+   // 검사 ID + 결과 함께 출력
+  alert(`🆔 검사 ID: ${inspectionId}\n\n${resultMsg}`);
+
     } catch (err) {
       console.error("서버 전송 실패:", err);
       alert("업로드 실패");
@@ -145,16 +154,7 @@ export default function MaskCheckPage() {
                             onClick={handleClick}
                             className="group w-[200px] transition p-3 bg-gray-700 text-white mb-6 rounded-md"
                         >검사하기
-                            {/*<img
-                                src="/button.png" // 찍기 버튼 이미지 (로컬 public 폴더에 있어야 함)
-                                alt="검사하기"
-                                className="w-60 h-18 group-hover:hidden"
-                            />
-                            <img
-                                src="/button_hover.png" // 찍기 버튼 이미지 (로컬 public 폴더에 있어야 함)
-                                alt="검사하기 hover"
-                                className="w-60 h-18 hidden group-hover:block"
-                            />*/}
+                            
                         </button>
                     </div>
 
