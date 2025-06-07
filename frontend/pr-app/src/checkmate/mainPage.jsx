@@ -65,7 +65,7 @@ export default function MainPage() {
         {/* 사원정보 */}
         <div className="flex items-center justify-center gap-5 mb-12 mt-5 md:mb-12 md:mt-15 text-neutral-700 text-[20px] md:text-3xl font-light ">
           <span>사원번호: {employee.username}</span> 
-          <span>이름: {employee.name}</span> 
+          
         </div>
 
         {/* 이미지 두 개 */}
