@@ -10,7 +10,8 @@ export default function LoginPage({ onSwitchToSignup }) {
     try {
       const res = await axios.post(`https://checkmate-iry6.onrender.com/api/login`, {
         username,
-        password
+        password,
+        rememberMe:true
       },
       {
        withCredentials: true, 
