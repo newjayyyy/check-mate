@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/api/*"
+  from = "/proxy/*"
   to = "https://checkmate-iry6.onrender.com/api/:splat"
   status = 200
-  force = flase
+  force = true

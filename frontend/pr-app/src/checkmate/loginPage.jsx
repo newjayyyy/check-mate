@@ -5,10 +5,10 @@ import axios from 'axios';
 export default function LoginPage({ onSwitchToSignup }) {
   const [username, setUser] = useState('');
   const [password, setPassword] = useState('');
-
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`/api/login`, {
+      const res = await axios.post(`${PROXY}/login`, {
         username,
         password,
         rememberMe:true
