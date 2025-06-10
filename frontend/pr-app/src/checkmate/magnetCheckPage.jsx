@@ -71,7 +71,7 @@ export default function MaskCheckPage() {
 
     try {
       const response = await axios.post(
-        "/api/inspections",
+        "https://checkmate-iry6.onrender.com/api/inspections",
         formData,
         {
            withCredentials: true, 
