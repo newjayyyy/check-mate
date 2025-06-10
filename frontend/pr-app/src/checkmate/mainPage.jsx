@@ -7,7 +7,7 @@ export default function MainPage() {
    const navigate = useNavigate();
    const handleLogout = async () => {
     try {
-      const res = await axios.get(`https://checkmate-iry6.onrender.com/api/logout`, 
+      const res = await axios.get(`/api/logout`, 
       {
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export default function MainPage() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await axios.get("https://checkmate-iry6.onrender.com/api/me", {
+        const res = await axios.get("/api/me", {
           withCredentials: true // 쿠키 포함
         });
         setEmployee({
