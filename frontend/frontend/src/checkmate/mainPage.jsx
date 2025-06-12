@@ -96,7 +96,7 @@ export default function MainPage() {
         {/* 이미지 하단 텍스트 */}
         <div className="flex items-center justify-center gap-15 md:gap-55 text-[16px] md:text-[25px] font-bold text-neutral-800 mb-5">
           <span>마스크 착용 검사</span>
-          <span>정상 부품 검사</span>
+          <span>부품 결함 검사</span>
         </div>
 
         <div className="flex items-center justify-center">
