@@ -8,6 +8,7 @@ export default function MaskCheckPage() {
     const fileInputRef = useRef(null);
     const [cameraError, setCameraError] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [imageURL, setImageURL] = useState(null); 
     const [capturedImage, setCapturedImage] = useState(null);
 
     const navigate = useNavigate();
@@ -40,6 +41,14 @@ export default function MaskCheckPage() {
     }
   }, []);
 
+  useEffect(() => {
+  return () => {
+    if (imageURL) {
+      URL.revokeObjectURL(imageURL);
+    }
+  };
+}, [imageURL]);
+
     // 사진 찍기 함수
     const takePhoto = () => {
         if (!videoRef.current || !canvasRef.current) return;
@@ -59,6 +68,10 @@ export default function MaskCheckPage() {
      const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file || !canvasRef.current) return;
+
+    // 이미지 미리보기를 위한 URL 설정
+    const imageObjectUrl = URL.createObjectURL(file);
+    setImageURL(imageObjectUrl); 
 
     const reader = new FileReader();
     reader.onload = (event) => {
