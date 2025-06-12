@@ -69,7 +69,6 @@ export default function MaskCheckPage() {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-        handleInspect(); // 바로 검사
       };
       img.src = event.target.result;
     };
@@ -179,7 +178,18 @@ export default function MaskCheckPage() {
                          file:bg-gray-700 file:text-white hover:file:bg-gray-500"
             />
           </div>
+          
         )}
+      {/* 이미지 미리보기 */}
+      {imageURL && (
+        <div className="flex justify-center mt-6">
+          <img
+            src={imageURL}
+            alt="업로드한 이미지"
+            className="w-[400px] h-[300px] rounded-xl overflow-hidden"
+          />
+        </div>
+      )}
         <canvas ref={canvasRef} className="hidden" />
       </div>
 
@@ -190,8 +200,8 @@ export default function MaskCheckPage() {
         </span>
       </div>
 
-      {/* 버튼 영역 (모바일만 보임) */}
-      {isMobile && (
+      {/* 버튼 영역*/}
+     
         <div className="w-full flex justify-center mt-6 mb-4">
           <button
             type="button"
@@ -200,7 +210,7 @@ export default function MaskCheckPage() {
           >
             검사하기
           </button>
-        </div>)}
+        </div>
 
                     {/* 오른쪽 하단 이미지 버튼 2개 */}
                     <div className="relative mt-6">
