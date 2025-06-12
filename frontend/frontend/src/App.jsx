@@ -15,12 +15,12 @@ function App() {
    <Router>
       
         <Routes>
-          <Route path="/main" element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/mask" element={<MaskCheckPage />} />
           <Route path="/magnet" element={<MagnetCheckPage />} />
           <Route path="/maskresult" element={<MaskResultPage />} />
           <Route path="/partresult" element={<PartResultPage />} />
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
     
 
