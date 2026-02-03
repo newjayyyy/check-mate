@@ -31,6 +31,8 @@ public class SecurityConfig {
 
     @Value("${spring.security.rememberme.key}")
     private String rememberKey;
+    @Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, DataSource dataSource) throws Exception {
@@ -41,7 +43,7 @@ public class SecurityConfig {
                 // cors 설정
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration cfg = new CorsConfiguration();
-                    cfg.setAllowedOrigins(List.of("http://localhost:3000"));
+                    cfg.setAllowedOriginPatterns(List.of(allowedOrigins));
                     cfg.setAllowCredentials(true);
                     cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     cfg.setAllowedHeaders(List.of("*"));
@@ -54,9 +56,7 @@ public class SecurityConfig {
                                 "/api/login",
                                 "/api/signup",
                                 "/api/logout",
-                                "/api/me",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**"
+                                "/api/me"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -20,4 +20,15 @@ public class JsonRememberMeServices extends PersistentTokenBasedRememberMeServic
                              Authentication successfulAuthentication) {
         onLoginSuccess(requset, response, successfulAuthentication);
     }
+
+    @Override
+    protected void setCookie(String[] tokens, int maxAge, HttpServletRequest request, HttpServletResponse response) {
+        String cookieValue = encodeCookie(tokens);
+
+        response.addHeader("Set-Cookie",
+                "remember-me=" + cookieValue +
+                        "; Max-Age=" + maxAge +
+                        "; Path=/" +
+                        "; HttpOnly; Secure; SameSite=None");
+    }
 }

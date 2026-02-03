@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -236,9 +238,15 @@ public class InspectionService {
             imageResults.add(imageResult);
         }
 
+        // 배포 환경 상관 없이 서울 기준 시간으로 반환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        String formattedDate = inspection.getUploadedAt()
+                .atZone(ZoneId.of("Asia/Seoul"))
+                .format(formatter);
+
         InspectionViewResponse dto = new InspectionViewResponse();
         dto.setInspectId(inspection.getId());
-        dto.setUploadedDate(inspection.getUploadedAt());
+        dto.setUploadedDate(formattedDate);
         dto.setImages(imageResults);
         return dto;
     }
